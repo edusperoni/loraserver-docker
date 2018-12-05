@@ -46,7 +46,7 @@ services:
       - 51883:1883
 
 
-config: 
+configs: 
   loraserver-config:
     file: ./configuration/loraserver/loraserver.toml
   lora-app-server-config:
