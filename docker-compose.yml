@@ -1,42 +1,63 @@
-version: "2"
+version: "3.3"
 
 services:
   loraserver:
-    image: loraserver/loraserver:2
-    volumes:
-      - ./configuration/loraserver:/etc/loraserver
+    image: loraserver/loraserver:latest
+    config: 
+      - source: loraserver-config
+        target: /etc/loraserver/loraserver.toml
 
   appserver:
-    image: loraserver/lora-app-server:2
+    image: loraserver/lora-app-server:latest
     ports:
-      - 8080:8080
-    volumes:
-      - ./configuration/lora-app-server:/etc/lora-app-server
+      - 58080:8080
+    config: 
+      - source: lora-app-server-config
+        target: /etc/lora-app-server/lora-app-server.toml
 
   gatewaybridge:
-    image: loraserver/lora-gateway-bridge:2
+    image: loraserver/lora-gateway-bridge:latest
     ports:
       - 1700:1700/udp
-    volumes:
-      - ./configuration/lora-gateway-bridge:/etc/lora-gateway-bridge
+    config: 
+      - source: lora-gateway-gateway-config
+        target: /etc/lora-gateway-bridge/lora-gateway-bridge.toml
   
   geoserver:
-    image: loraserver/lora-geo-server:2
-    volumes:
-      - ./configuration/lora-geo-server:/etc/lora-geo-server
+    image: loraserver/lora-geo-server:latest
+    config: 
+      - source: lora-geo-server-config
+        target: /etc/lora-geo-server/lora-geo-server.toml
   
   postgresql:
     image: postgres:9.6-alpine
-    volumes:
-      - ./configuration/postgresql/initdb:/docker-entrypoint-initdb.d
-      - ./data/postgresql:/var/lib/postgresql/data
+    config: 
+      - source: postgres-db-config
+        target: /docker-entrypoint-initdb.d/001-combined.sh
 
   redis:
     image: redis:4-alpine
     volumes:
-      - ./data/redis:/data
+      - redis-data:/data
 
   mosquitto:
     image: eclipse-mosquitto
     ports:
-      - 1883:1883
+      - 51883:1883
+
+
+config: 
+  loraserver-config:
+    file: ./configuration/loraserver/loraserver.toml
+  lora-app-server-config:
+    file: ./configuration/lora-app-server/lora-app-server.toml
+  lora-gateway-gateway-config:
+    file: ./configuration/lora-gateway-bridge/lora-gateway-bridge.toml
+  lora-geo-server-config:
+    file: ./configuration/lora-geo-server/lora-geo-server.toml
+  postgres-db-config:
+    file: ./configuration/postgresql/initdb/001-combined.sh
+
+volumes:
+  redis-data:
+  posgres-data:
