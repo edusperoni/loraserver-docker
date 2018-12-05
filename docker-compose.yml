@@ -3,7 +3,7 @@ version: "3.3"
 services:
   loraserver:
     image: loraserver/loraserver:latest
-    config: 
+    configs: 
       - source: loraserver-config
         target: /etc/loraserver/loraserver.toml
 
@@ -11,7 +11,7 @@ services:
     image: loraserver/lora-app-server:latest
     ports:
       - 58080:8080
-    config: 
+    configs: 
       - source: lora-app-server-config
         target: /etc/lora-app-server/lora-app-server.toml
 
@@ -19,19 +19,19 @@ services:
     image: loraserver/lora-gateway-bridge:latest
     ports:
       - 1700:1700/udp
-    config: 
+    configs: 
       - source: lora-gateway-gateway-config
         target: /etc/lora-gateway-bridge/lora-gateway-bridge.toml
   
   geoserver:
     image: loraserver/lora-geo-server:latest
-    config: 
+    configs: 
       - source: lora-geo-server-config
         target: /etc/lora-geo-server/lora-geo-server.toml
   
   postgresql:
     image: postgres:9.6-alpine
-    config: 
+    configs: 
       - source: postgres-db-config
         target: /docker-entrypoint-initdb.d/001-combined.sh
 
@@ -47,15 +47,15 @@ services:
 
 
 configs: 
-  loraserver-config:
+  loraserver-configs:
     file: ./configuration/loraserver/loraserver.toml
-  lora-app-server-config:
+  lora-app-server-configs:
     file: ./configuration/lora-app-server/lora-app-server.toml
-  lora-gateway-gateway-config:
+  lora-gateway-gateway-configs:
     file: ./configuration/lora-gateway-bridge/lora-gateway-bridge.toml
-  lora-geo-server-config:
+  lora-geo-server-configs:
     file: ./configuration/lora-geo-server/lora-geo-server.toml
-  postgres-db-config:
+  postgres-db-configs:
     file: ./configuration/postgresql/initdb/001-combined.sh
 
 volumes:
