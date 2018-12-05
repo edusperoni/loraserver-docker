@@ -47,15 +47,15 @@ services:
 
 
 configs: 
-  loraserver-configs:
+  loraserver-config:
     file: ./configuration/loraserver/loraserver.toml
-  lora-app-server-configs:
+  lora-app-server-config:
     file: ./configuration/lora-app-server/lora-app-server.toml
-  lora-gateway-gateway-configs:
+  lora-gateway-gateway-config:
     file: ./configuration/lora-gateway-bridge/lora-gateway-bridge.toml
-  lora-geo-server-configs:
+  lora-geo-server-config:
     file: ./configuration/lora-geo-server/lora-geo-server.toml
-  postgres-db-configs:
+  postgres-db-config:
     file: ./configuration/postgresql/initdb/001-combined.sh
 
 volumes:
